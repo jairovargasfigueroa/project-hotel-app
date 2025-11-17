@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/hotels_provider.dart';
 import '../widgets/hotel_selector_dropdown.dart';
+import '../../../habitaciones/presentation/widgets/habitaciones_list_widget.dart';
 
 class HotelsScreen extends StatefulWidget {
   const HotelsScreen({super.key});
@@ -83,112 +84,124 @@ class _HotelsScreenState extends State<HotelsScreen> {
           }
 
           // Success state
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Text(
-                      'Seleccione un hotel',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    ElevatedButton.icon(
-                      onPressed: () => provider.loadHotelesActivos(),
-                      icon: const Icon(Icons.refresh, size: 18),
-                      label: const Text('Recargar'),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-
-                // Dropdown selector
-                const HotelSelectorDropdown(),
-
-                const SizedBox(height: 24),
-
-                // Información del hotel seleccionado
-                if (provider.selectedHotel != null)
-                  Card(
-                    elevation: 2,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Hotel Seleccionado',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey[600],
-                            ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Seleccione un hotel',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
-                          const SizedBox(height: 8),
-                          Text(
-                            provider.selectedHotel!.nombre,
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Row(
+                        ),
+                        ElevatedButton.icon(
+                          onPressed: () => provider.loadHotelesActivos(),
+                          icon: const Icon(Icons.refresh, size: 18),
+                          label: const Text('Recargar'),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Dropdown selector
+                    const HotelSelectorDropdown(),
+
+                    const SizedBox(height: 24),
+
+                    // Información del hotel seleccionado
+                    if (provider.selectedHotel != null)
+                      Card(
+                        elevation: 2,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Icon(
-                                Icons.location_on,
-                                size: 16,
-                                color: Colors.grey,
-                              ),
-                              const SizedBox(width: 4),
-                              Expanded(
-                                child: Text(
-                                  provider.selectedHotel!.direccion,
-                                  style: const TextStyle(fontSize: 14),
+                              Text(
+                                'Hotel Seleccionado',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey[600],
                                 ),
                               ),
-                            ],
-                          ),
-                          const SizedBox(height: 4),
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.phone,
-                                size: 16,
-                                color: Colors.grey,
-                              ),
-                              const SizedBox(width: 4),
+                              const SizedBox(height: 8),
                               Text(
-                                provider.selectedHotel!.telefono,
-                                style: const TextStyle(fontSize: 14),
+                                provider.selectedHotel!.nombre,
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.location_on,
+                                    size: 16,
+                                    color: Colors.grey,
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Expanded(
+                                    child: Text(
+                                      provider.selectedHotel!.direccion,
+                                      style: const TextStyle(fontSize: 14),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 4),
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.phone,
+                                    size: 16,
+                                    color: Colors.grey,
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    provider.selectedHotel!.telefono,
+                                    style: const TextStyle(fontSize: 14),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 4),
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.check_circle,
+                                    size: 16,
+                                    color: Colors.green,
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    provider.selectedHotel!.estado,
+                                    style: const TextStyle(fontSize: 14),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                          const SizedBox(height: 4),
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.check_circle,
-                                size: 16,
-                                color: Colors.green,
-                              ),
-                              const SizedBox(width: 4),
-                              Text(
-                                provider.selectedHotel!.estado,
-                                style: const TextStyle(fontSize: 14),
-                              ),
-                            ],
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                  ],
+                ),
+              ),
+
+              // Lista de habitaciones
+              if (provider.selectedHotel != null)
+                Expanded(
+                  child: HabitacionesListWidget(
+                    hotelId: provider.selectedHotel!.id!,
                   ),
-              ],
-            ),
+                ),
+            ],
           );
         },
       ),

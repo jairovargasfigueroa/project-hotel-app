@@ -26,7 +26,7 @@ class ApiService {
         onRequest: (options, handler) async {
           // 🔐 TOKEN HARDCODEADO PARA PRUEBAS
           const String hardcodedToken =
-              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzYzMzQyOTU1LCJpYXQiOjE3NjMzMzkzNTUsImp0aSI6IjkxMjEzYmEyZWE4OTRhOTNhNWY1MmM3ZmU4NTZhODdmIiwidXNlcl9pZCI6IjEifQ.DF0Zesc5YmowZ5iaQNFwaIOHa-U2XosLsvDnVBFHJ2U';
+              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzYzMzQ4NDEwLCJpYXQiOjE3NjMzNDQ4MTAsImp0aSI6IjE2MTUxMGY1MzE3NTQ1MDI4OTk1ZjlkMTU4MjdmM2E5IiwidXNlcl9pZCI6IjEifQ.CAP2wz3T8yz_KTYIlLa9Ic48xRBeq0YXy-4mtkI4NWA';
 
           // Agregar token
           options.headers['Authorization'] = 'Bearer $hardcodedToken';
@@ -97,4 +97,7 @@ class ApiService {
   Future<Response> patch(String endpoint, dynamic data) async {
     return await _dio.patch(endpoint, data: data);
   }
+
+  // Getter para acceso directo al Dio
+  Dio get dio => _dio;
 }

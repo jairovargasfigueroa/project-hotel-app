@@ -6,6 +6,9 @@ import 'features/hoteles/data/datasources/hotel_remote_datasource.dart';
 import 'features/hoteles/data/repositories/hotel_repository_impl.dart';
 import 'features/hoteles/presentation/providers/hotels_provider.dart';
 import 'features/hoteles/presentation/screens/hotels_screen.dart';
+import 'features/habitaciones/data/datasources/habitacion_remote_datasource.dart';
+import 'features/habitaciones/data/repositories/habitacion_repository_impl.dart';
+import 'features/habitaciones/presentation/providers/habitaciones_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +27,14 @@ class MyApp extends StatelessWidget {
           create:
               (_) => HotelsProvider(
                 HotelRepositoryImpl(HotelRemoteDatasource(ApiService())),
+              ),
+        ),
+        ChangeNotifierProvider(
+          create:
+              (_) => HabitacionesProvider(
+                HabitacionRepositoryImpl(
+                  HabitacionRemoteDatasource(ApiService()),
+                ),
               ),
         ),
       ],
