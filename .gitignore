@@ -46,3 +46,7 @@ app.*.map.json
 
 # Flutter Version Management
 .fvm/
+# Environment variables
+.env
+.env.local
+.env.*.local
