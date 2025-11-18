@@ -9,9 +9,9 @@ class HabitacionRepositoryImpl {
   HabitacionRepositoryImpl(this._remoteDatasource);
 
   /// Obtener todas las habitaciones de un hotel
-  Future<List<HabitacionModel>> getHabitacionesByHotel() async {
+  Future<List<HabitacionModel>> getHabitacionesByHotel(int hotelId) async {
     try {
-      return await _remoteDatasource.getHabitacionesByHotel();
+      return await _remoteDatasource.getHabitacionesByHotel(hotelId);
     } catch (e) {
       throw Exception('Error al obtener habitaciones del hotel: $e');
     }
@@ -30,7 +30,7 @@ class HabitacionRepositoryImpl {
   Future<List<HabitacionModel>> getHabitacionesDisponibles(int hotelId) async {
     try {
       final habitaciones = await _remoteDatasource.getHabitacionesByHotel(
-        // hotelId,
+        hotelId,
       );
       return habitaciones
           .where((hab) => hab.estado.toLowerCase() == 'disponible')

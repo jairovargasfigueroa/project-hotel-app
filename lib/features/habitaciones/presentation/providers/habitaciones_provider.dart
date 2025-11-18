@@ -42,7 +42,7 @@ class HabitacionesProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      _habitaciones = await _repository.getHabitacionesByHotel();
+      _habitaciones = await _repository.getHabitacionesByHotel(hotelId);
       _errorMessage = null;
     } catch (e) {
       _errorMessage = e.toString();
