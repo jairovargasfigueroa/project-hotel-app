@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/habitaciones_provider.dart';
+import '../../../reservas/presentation/screens/crear_reserva_screen.dart';
 
 class HabitacionesListWidget extends StatefulWidget {
   final int hotelId;
@@ -215,8 +216,15 @@ class _HabitacionesListWidgetState extends State<HabitacionesListWidget> {
                       ),
                       onTap: () {
                         provider.selectHabitacion(habitacion);
-                        // Aquí podrías mostrar más detalles o navegar a otra pantalla
-                        _showHabitacionDetails(context, habitacion);
+                        // Navegar a la pantalla de crear reserva
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder:
+                                (context) =>
+                                    CrearReservaScreen(habitacion: habitacion),
+                          ),
+                        );
                       },
                     ),
                   );
@@ -226,101 +234,6 @@ class _HabitacionesListWidgetState extends State<HabitacionesListWidget> {
           ],
         );
       },
-    );
-  }
-
-  void _showHabitacionDetails(BuildContext context, habitacion) {
-    showModalBottomSheet(
-      context: context,
-      builder:
-          (context) => Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Habitación ${habitacion.numero}',
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                _DetailRow(
-                  icon: Icons.category,
-                  label: 'Tipo',
-                  value: habitacion.tipo.toUpperCase(),
-                ),
-                _DetailRow(
-                  icon: Icons.photo_size_select_large,
-                  label: 'Tamaño',
-                  value: habitacion.tamanio,
-                ),
-                _DetailRow(
-                  icon: Icons.people,
-                  label: 'Capacidad',
-                  value: '${habitacion.capacidad} personas',
-                ),
-                _DetailRow(
-                  icon: Icons.attach_money,
-                  label: 'Precio',
-                  value: '\$${habitacion.precioNoche} por noche',
-                ),
-                _DetailRow(
-                  icon: Icons.info,
-                  label: 'Estado',
-                  value: habitacion.estado.toUpperCase(),
-                ),
-                if (habitacion.descripcion.isNotEmpty) ...[
-                  const SizedBox(height: 16),
-                  const Text(
-                    'Descripción:',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(habitacion.descripcion),
-                ],
-              ],
-            ),
-          ),
-    );
-  }
-}
-
-class _DetailRow extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final String value;
-
-  const _DetailRow({
-    required this.icon,
-    required this.label,
-    required this.value,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        children: [
-          Icon(icon, size: 20, color: Colors.grey[600]),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(label, style: TextStyle(color: Colors.grey[600])),
-                Text(
-                  value,
-                  style: const TextStyle(fontWeight: FontWeight.w500),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

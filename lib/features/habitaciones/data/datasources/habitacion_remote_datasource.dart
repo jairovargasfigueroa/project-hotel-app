@@ -10,16 +10,16 @@ class HabitacionRemoteDatasource {
   HabitacionRemoteDatasource(this._apiService);
 
   /// Obtener habitaciones de un hotel específico
-  Future<List<HabitacionModel>> getHabitacionesByHotel() async {
+  Future<List<HabitacionModel>> getHabitacionesByHotel(int hotelId) async {
     try {
-      // developer.log(
-      //   'Iniciando petición para habitaciones del hotel: $hotelId',
-      //   name: 'HabitacionRemoteDatasource',
-      // );
+      developer.log(
+        'Iniciando petición para habitaciones del hotel: $hotelId',
+        name: 'HabitacionRemoteDatasource',
+      );
 
       final response = await _apiService.dio.get(
-        '/habitaciones/',
-        // queryParameters: {'hotel': hotelId},
+        '/habitaciones/por-hotel/',
+        queryParameters: {'hotel_id': hotelId},
       );
 
       developer.log(
