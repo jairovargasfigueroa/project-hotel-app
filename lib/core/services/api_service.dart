@@ -26,14 +26,14 @@ class ApiService {
         onRequest: (options, handler) async {
           // 🔐 TOKEN HARDCODEADO PARA PRUEBAS
           const String hardcodedToken =
-              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzYzMzQ4NDEwLCJpYXQiOjE3NjMzNDQ4MTAsImp0aSI6IjE2MTUxMGY1MzE3NTQ1MDI4OTk1ZjlkMTU4MjdmM2E5IiwidXNlcl9pZCI6IjEifQ.CAP2wz3T8yz_KTYIlLa9Ic48xRBeq0YXy-4mtkI4NWA';
+              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzYzNDUxNDUyLCJpYXQiOjE3NjM0Mjk4NTIsImp0aSI6ImM2MDYyMDc4ODZhNTRjYmI5MmU3MzdjYzZmOGMyNGI3IiwidXNlcl9pZCI6IjEifQ.Ff4bqn7cjqE5rxL_H20LDba9nIVu6Gm6sivTblMlz38';
 
           // Agregar token
           options.headers['Authorization'] = 'Bearer $hardcodedToken';
 
           // 🏢 Modificar header Host para que Django-tenants detecte el tenant
           // Usamos el dominio que ya tienes en la BD (localhost)
-          options.headers['Host'] = 'jairoasoc.localhost:8000';
+          options.headers['Host'] = 'ingenieria.localhost';
 
           // 💡 Código original comentado (usa storage)
           // Obtener token del storage

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../providers/hotels_provider.dart';
 import '../widgets/hotel_selector_dropdown.dart';
 import '../../../habitaciones/presentation/widgets/habitaciones_list_widget.dart';
+import '../../../perfil/presentation/screens/perfil_screen.dart';
 
 class HotelsScreen extends StatefulWidget {
   const HotelsScreen({super.key});
@@ -29,6 +30,20 @@ class _HotelsScreenState extends State<HotelsScreen> {
       appBar: AppBar(
         title: const Text('Seleccionar Hotel'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.person),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const PerfilScreen(),
+                ),
+              );
+            },
+            tooltip: 'Mi Perfil',
+          ),
+        ],
       ),
       body: Consumer<HotelsProvider>(
         builder: (context, provider, child) {
