@@ -3,11 +3,59 @@
 import 'dart:developer' as developer;
 import '../../../../core/services/api_service.dart';
 import '../models/reserva_model.dart';
+import '../models/mis_reservas_response_model.dart';
 
 class ReservaRemoteDatasource {
   final ApiService _apiService;
 
   ReservaRemoteDatasource(this._apiService);
+
+  /// Obtener mis reservas (del usuario autenticado)
+  Future<MisReservasResponseModel> getMisReservas() async {
+    try {
+      developer.log(
+        'Iniciando petición GET /usuarios/mis-reservas/',
+        name: 'ReservaRemoteDatasource',
+      );
+
+      final response = await _apiService.get('/usuarios/mis-reservas/');
+
+      developer.log(
+        '📥 Respuesta recibida - Status: ${response.statusCode}',
+        name: 'ReservaRemoteDatasource',
+      );
+
+      if (response.statusCode == 200) {
+        developer.log(
+          '📦 Data de reservas: ${response.data}',
+          name: 'ReservaRemoteDatasource',
+        );
+
+        final misReservas = MisReservasResponseModel.fromJson(response.data);
+
+        developer.log(
+          '✅ Reservas parseadas: ${misReservas.totalReservas} reservas encontradas',
+          name: 'ReservaRemoteDatasource',
+        );
+
+        return misReservas;
+      } else {
+        developer.log(
+          '❌ Error en respuesta: ${response.statusCode}',
+          name: 'ReservaRemoteDatasource',
+          error: response.data,
+        );
+        throw Exception('Error al obtener reservas: ${response.statusCode}');
+      }
+    } catch (e) {
+      developer.log(
+        '❌ Error en comunicación con servidor',
+        name: 'ReservaRemoteDatasource',
+        error: e,
+      );
+      throw Exception('Error en la comunicación con el servidor: $e');
+    }
+  }
 
   /// Crear una nueva reserva
   Future<void> createReserva(ReservaModel reserva) async {
@@ -90,3 +138,4 @@ class ReservaRemoteDatasource {
     }
   }
 }
+

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/habitaciones/presentation/screens/habitaciones_screen.dart';
 import '../../features/perfil/presentation/screens/perfil_screen.dart';
+import '../../features/reservas/presentation/screens/mis_reservas_screen.dart';
 import '../services/storage_service.dart';
 import 'scaffold_with_nav.dart';
 
@@ -42,7 +43,17 @@ final GoRouter appRouter = GoRouter(
           ],
         ),
 
-        // TAB 1: Perfil
+        // TAB 1: Mis Pedidos
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/mis-reservas',
+              builder: (context, state) => const MisReservasScreen(),
+            ),
+          ],
+        ),
+
+        // TAB 2: Perfil
         StatefulShellBranch(
           routes: [
             GoRoute(

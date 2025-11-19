@@ -34,7 +34,7 @@ class ApiService {
 
           // 🏢 Modificar header Host para que Django-tenants detecte el tenant
           // Usamos el dominio que ya tienes en la BD (localhost)
-          options.headers['Host'] = 'jairoasoc.localhost';
+          options.headers['Host'] = 'ingenieria.localhost';
 
           return handler.next(options);
         },
