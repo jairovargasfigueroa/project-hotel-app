@@ -24,24 +24,17 @@ class ApiService {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          // 🔐 TOKEN HARDCODEADO PARA PRUEBAS
-          const String hardcodedToken =
-              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzYzNDQxNzc2LCJpYXQiOjE3NjM0MzgxNzYsImp0aSI6ImU1MTZlYzcyODY5ZjRjZjI5NWU1Mzg3ODYwMWQ2NTM4IiwidXNlcl9pZCI6IjIifQ.dS4pTu69fc3NftwIZeMt-UVx67cBKGqele55mmgqGAY';
+          // Obtener token del storage
+          final token = await _storage.getToken();
 
-          // Agregar token
-          options.headers['Authorization'] = 'Bearer $hardcodedToken';
+          // Si hay token, agregarlo al header
+          if (token != null && token.isNotEmpty) {
+            options.headers['Authorization'] = 'Bearer $token';
+          }
 
           // 🏢 Modificar header Host para que Django-tenants detecte el tenant
           // Usamos el dominio que ya tienes en la BD (localhost)
           options.headers['Host'] = 'jairoasoc.localhost';
-
-          // 💡 Código original comentado (usa storage)
-          // Obtener token del storage
-          // final token = await _storage.getToken();
-          // Si hay token, agregarlo al header
-          // if (token != null && token.isNotEmpty) {
-          //   options.headers['Authorization'] = 'Bearer $token';
-          // }
 
           return handler.next(options);
         },

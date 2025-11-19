@@ -50,3 +50,10 @@ app.*.map.json
 .env
 .env.local
 .env.*.local
+
+# Firebase configuration files (sensitive data)
+lib/firebase_options.dart
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
+firebase.json
+.firebaserc
