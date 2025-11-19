@@ -69,6 +69,11 @@ class ScaffoldWithNavBar extends StatelessWidget {
             label: 'Habitaciones',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_bag_outlined),
+            activeIcon: Icon(Icons.shopping_bag),
+            label: 'Mis Pedidos',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.person_outline),
             activeIcon: Icon(Icons.person),
             label: 'Perfil',
