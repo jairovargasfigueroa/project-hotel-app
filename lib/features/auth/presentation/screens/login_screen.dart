@@ -203,6 +203,25 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: TextStyle(color: Colors.grey[600]),
                     ),
                   ),
+
+                  const SizedBox(height: 24),
+
+                  // Link para ir a registro
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text('¿No tienes una cuenta?'),
+                      TextButton(
+                        onPressed: () {
+                          context.go('/register');
+                        },
+                        child: const Text(
+                          'Regístrate',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),

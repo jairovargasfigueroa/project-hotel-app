@@ -88,6 +88,51 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  /// Registrar nuevo usuario
+  Future<void> register({
+    required String username,
+    required String password,
+    required String email,
+    String? firstName,
+    String? lastName,
+  }) async {
+    _isLoading = true;
+    _errorMessage = null;
+    notifyListeners();
+
+    try {
+      final response = await _repository.register(
+        username: username,
+        password: password,
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+      );
+
+      // Actualizar estado del usuario
+      _currentUser = GuestUser(
+        id: response.user.id,
+        username: response.user.username,
+        email: response.user.email,
+        firstName: response.user.firstName,
+        lastName: response.user.lastName,
+      );
+      _isAuthenticated = true;
+      _errorMessage = null;
+
+      notifyListeners();
+    } catch (e) {
+      _errorMessage = _parseError(e);
+      _isAuthenticated = false;
+      _currentUser = null;
+      notifyListeners();
+      rethrow;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
   /// Limpiar mensajes de error
   void clearError() {
     _errorMessage = null;

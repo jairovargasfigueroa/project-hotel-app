@@ -3,6 +3,7 @@
 import 'dart:developer' as developer;
 import '../../../../core/services/api_service.dart';
 import '../models/auth_models.dart';
+import '../models/register_models.dart';
 
 class AuthRemoteDatasource {
   final ApiService _apiService;
@@ -73,6 +74,55 @@ class AuthRemoteDatasource {
     } catch (e) {
       developer.log('❌ Error en logout', name: 'AuthDatasource', error: e);
       // No lanzamos error porque el logout local debe funcionar aunque falle el remoto
+    }
+  }
+
+  /// Registro de usuario
+  /// Endpoint: POST /usuarios/register/
+  Future<RegisterResponse> register(RegisterRequest request) async {
+    try {
+      developer.log(
+        '🔵 Iniciando registro para usuario: ${request.username}',
+        name: 'AuthDatasource',
+      );
+
+      final response = await _apiService.post('/usuarios/register/', request.toJson());
+
+      developer.log(
+        '📥 Respuesta recibida - Status: ${response.statusCode}',
+        name: 'AuthDatasource',
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        developer.log('✅ Registro exitoso', name: 'AuthDatasource');
+        developer.log(
+          '📦 Data completa: ${response.data}',
+          name: 'AuthDatasource',
+        );
+
+        final registerResponse = RegisterResponse.fromJson(
+          response.data as Map<String, dynamic>,
+        );
+
+        developer.log(
+          '✅ RegisterResponse parseado correctamente - Usuario: ${registerResponse.user.username}',
+          name: 'AuthDatasource',
+        );
+
+        return registerResponse;
+      } else {
+        developer.log(
+          '❌ Error en registro: ${response.statusCode}',
+          name: 'AuthDatasource',
+          error: response.data,
+        );
+        throw Exception(
+          'Error en registro: ${response.data?['message'] ?? 'Error desconocido'}',
+        );
+      }
+    } catch (e) {
+      developer.log('❌ Excepción en registro', name: 'AuthDatasource', error: e);
+      rethrow;
     }
   }
 

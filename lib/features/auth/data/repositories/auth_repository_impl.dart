@@ -4,6 +4,7 @@ import '../../../../core/services/notification_service.dart';
 import '../../../../core/services/storage_service.dart';
 import '../datasources/auth_remote_datasource.dart';
 import '../models/auth_models.dart';
+import '../models/register_models.dart';
 
 class AuthRepositoryImpl {
   final AuthRemoteDatasource _remoteDatasource;
@@ -57,6 +58,42 @@ class AuthRepositoryImpl {
     await _storage.clearToken();
     await _storage.clearRefreshToken();
     await _storage.clearUserData();
+  }
+
+  /// Registro de nuevo usuario
+  /// Guarda los tokens en storage después de registro exitoso
+  Future<RegisterResponse> register({
+    required String username,
+    required String password,
+    required String email,
+    String? firstName,
+    String? lastName,
+  }) async {
+    try {
+      final request = RegisterRequest(
+        username: username,
+        password: password,
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+      );
+
+      final response = await _remoteDatasource.register(request);
+
+      // Guardar tokens en storage
+      await _storage.saveToken(response.accessToken);
+      await _storage.saveRefreshToken(response.refreshToken);
+
+      // Guardar datos del usuario
+      await _storage.saveUserData(response.user.toJson());
+
+      // 🔥 Generar y enviar nuevo FCM token para este usuario
+      await NotificationService.forceTokenRefreshAndSend();
+
+      return response;
+    } catch (e) {
+      throw Exception('Error al registrar usuario: $e');
+    }
   }
 
   /// Verificar si hay una sesión activa
