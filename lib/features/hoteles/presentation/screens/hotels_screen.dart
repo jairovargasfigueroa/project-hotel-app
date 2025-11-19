@@ -26,10 +26,6 @@ class _HotelsScreenState extends State<HotelsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Seleccionar Hotel'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      ),
       body: Consumer<HotelsProvider>(
         builder: (context, provider, child) {
           // Loading state

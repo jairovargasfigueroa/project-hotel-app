@@ -66,6 +66,51 @@ class StorageService {
     };
   }
 
+  // Guardar datos de usuario como JSON
+  Future<void> saveUserData(Map<String, dynamic> userData) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(_userIdKey, userData['id'] as int);
+    await prefs.setString(_userNameKey, userData['username'] as String);
+    await prefs.setString(_userEmailKey, userData['email'] as String);
+  }
+
+  // Obtener datos de usuario como JSON
+  Future<Map<String, dynamic>?> getUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final id = prefs.getInt(_userIdKey);
+
+    if (id == null) return null;
+
+    return {
+      'id': id,
+      'username': prefs.getString(_userNameKey),
+      'email': prefs.getString(_userEmailKey),
+      'first_name': null,
+      'last_name': null,
+      'photo_url': null,
+    };
+  }
+
+  // Limpiar token
+  Future<void> clearToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_tokenKey);
+  }
+
+  // Limpiar refresh token
+  Future<void> clearRefreshToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_refreshTokenKey);
+  }
+
+  // Limpiar datos de usuario
+  Future<void> clearUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_userIdKey);
+    await prefs.remove(_userNameKey);
+    await prefs.remove(_userEmailKey);
+  }
+
   // Limpiar todo (logout)
   Future<void> clear() async {
     final prefs = await SharedPreferences.getInstance();
