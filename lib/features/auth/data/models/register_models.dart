@@ -1,11 +1,14 @@
 // lib/features/auth/data/models/register_models.dart
 
+import 'dart:io';
+
 class RegisterRequest {
   final String username;
   final String password;
   final String email;
   final String? firstName;
   final String? lastName;
+  final File? photoFile;
 
   RegisterRequest({
     required this.username,
@@ -13,6 +16,7 @@ class RegisterRequest {
     required this.email,
     this.firstName,
     this.lastName,
+    this.photoFile,
   });
 
   Map<String, dynamic> toJson() {

@@ -128,9 +128,12 @@ class _MisReservasScreenState extends State<MisReservasScreen> {
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton.icon(
-                    onPressed: () => provider.reload(),
+                    onPressed: () {
+                      // Navegar a la pantalla de login
+                      context.push('/login');
+                    },
                     icon: const Icon(Icons.refresh),
-                    label: const Text('Reintentar'),
+                    label: const Text('Login'),
                   ),
                 ],
               ),

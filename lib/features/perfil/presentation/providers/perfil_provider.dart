@@ -1,5 +1,6 @@
 // lib/features/perfil/presentation/providers/perfil_provider.dart
 
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import '../../../../core/services/api_service.dart';
 import '../../data/datasources/perfil_remote_datasource.dart';
@@ -42,6 +43,37 @@ class PerfilProvider extends ChangeNotifier {
     }
   }
 
+  /// Actualizar perfil del usuario
+  Future<bool> updatePerfil({
+    String? firstName,
+    String? lastName,
+    String? email,
+    File? photoFile,
+  }) async {
+    _isLoading = true;
+    _errorMessage = null;
+    notifyListeners();
+
+    try {
+      _perfil = await _repository.updatePerfil(
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        photoFile: photoFile,
+      );
+      _errorMessage = null;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      _errorMessage = 'Error al actualizar perfil: $e';
+      notifyListeners();
+      return false;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
   /// Recargar datos del perfil
   Future<void> reload() async {
     await loadPerfil();
@@ -50,6 +82,12 @@ class PerfilProvider extends ChangeNotifier {
   /// Limpiar datos del perfil
   void clearPerfil() {
     _perfil = null;
+    _errorMessage = null;
+    notifyListeners();
+  }
+
+  /// Limpiar mensaje de error
+  void clearError() {
     _errorMessage = null;
     notifyListeners();
   }

@@ -80,6 +80,17 @@ class _PerfilScreenState extends State<PerfilScreen> {
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,
             actions: [
               IconButton(
+                icon: const Icon(Icons.edit),
+                onPressed: () async {
+                  await context.push('/edit-perfil');
+                  // Recargar perfil después de editar
+                  if (context.mounted) {
+                    context.read<PerfilProvider>().reload();
+                  }
+                },
+                tooltip: 'Editar perfil',
+              ),
+              IconButton(
                 icon: const Icon(Icons.refresh),
                 onPressed: () {
                   context.read<PerfilProvider>().reload();
@@ -248,17 +259,16 @@ class _PerfilScreenState extends State<PerfilScreen> {
                     Card(
                       child: Column(
                         children: [
-                          if (perfil.id != null)
-                            ListTile(
-                              leading: const Icon(Icons.fingerprint),
-                              title: const Text('ID de Usuario'),
-                              subtitle: Text(perfil.id.toString()),
-                            ),
-                          if (perfil.id != null) const Divider(height: 1),
+                          ListTile(
+                            leading: const Icon(Icons.fingerprint),
+                            title: const Text('ID de Usuario'),
+                            subtitle: Text(perfil.id.toString()),
+                          ),
+                          const Divider(height: 1),
                           ListTile(
                             leading: const Icon(Icons.access_time),
                             title: const Text('Último acceso'),
-                            subtitle: Text(perfil.last_login),
+                            subtitle: Text(perfil.last_login ?? 'Nunca'),
                           ),
                         ],
                       ),

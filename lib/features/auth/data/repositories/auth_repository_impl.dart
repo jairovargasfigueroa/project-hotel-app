@@ -1,5 +1,6 @@
 // lib/features/auth/data/repositories/auth_repository_impl.dart
 
+import 'dart:io';
 import '../../../../core/services/notification_service.dart';
 import '../../../../core/services/storage_service.dart';
 import '../datasources/auth_remote_datasource.dart';
@@ -68,6 +69,7 @@ class AuthRepositoryImpl {
     required String email,
     String? firstName,
     String? lastName,
+    File? photoFile,
   }) async {
     try {
       final request = RegisterRequest(
@@ -76,6 +78,7 @@ class AuthRepositoryImpl {
         email: email,
         firstName: firstName,
         lastName: lastName,
+        photoFile: photoFile,
       );
 
       final response = await _remoteDatasource.register(request);

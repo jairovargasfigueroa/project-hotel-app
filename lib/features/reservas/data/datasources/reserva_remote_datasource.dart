@@ -14,11 +14,11 @@ class ReservaRemoteDatasource {
   Future<MisReservasResponseModel> getMisReservas() async {
     try {
       developer.log(
-        'Iniciando petición GET /usuarios/mis-reservas/',
+        'Iniciando petición GET /usuarios/misreservas/',
         name: 'ReservaRemoteDatasource',
       );
 
-      final response = await _apiService.get('/usuarios/mis-reservas/');
+      final response = await _apiService.get('/usuarios/misreservas/');
 
       developer.log(
         '📥 Respuesta recibida - Status: ${response.statusCode}',

@@ -1,5 +1,6 @@
 // lib/features/auth/presentation/provider/auth_provider.dart
 
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import '../../data/models/auth_models.dart';
 import '../../data/repositories/auth_repository_impl.dart';
@@ -95,6 +96,7 @@ class AuthProvider extends ChangeNotifier {
     required String email,
     String? firstName,
     String? lastName,
+    File? photoFile,
   }) async {
     _isLoading = true;
     _errorMessage = null;
@@ -107,6 +109,7 @@ class AuthProvider extends ChangeNotifier {
         email: email,
         firstName: firstName,
         lastName: lastName,
+        photoFile: photoFile,
       );
 
       // Actualizar estado del usuario
