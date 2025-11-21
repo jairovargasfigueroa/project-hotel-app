@@ -18,7 +18,7 @@ class PerfilRemoteDatasource {
         name: 'PerfilDataSource',
       );
 
-      final response = await _apiService.get('/usuarios/me/');
+      final response = await _apiService.get('api/usuarios/me/');
 
       developer.log(
         '📥 Respuesta recibida - Status: ${response.statusCode}',
@@ -96,7 +96,7 @@ class PerfilRemoteDatasource {
         requestData = data;
       }
 
-      final response = await _apiService.patch('/usuarios/updateprofile/', requestData);
+      final response = await _apiService.patch('api/usuarios/updateprofile/', requestData);
 
       developer.log(
         '📥 Respuesta recibida - Status: ${response.statusCode}',

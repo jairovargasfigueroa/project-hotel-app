@@ -18,7 +18,7 @@ class ReservaRemoteDatasource {
         name: 'ReservaRemoteDatasource',
       );
 
-      final response = await _apiService.get('/usuarios/misreservas/');
+      final response = await _apiService.get('api/usuarios/misreservas/');
 
       developer.log(
         '📥 Respuesta recibida - Status: ${response.statusCode}',
