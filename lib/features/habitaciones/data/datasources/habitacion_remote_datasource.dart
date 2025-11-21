@@ -64,7 +64,7 @@ class HabitacionRemoteDatasource {
         name: 'HabitacionRemoteDatasource',
       );
 
-      final response = await _apiService.dio.get('/habitaciones/$id/');
+      final response = await _apiService.dio.get('api/habitaciones/$id/');
 
       developer.log(
         'Habitación obtenida - Status: ${response.statusCode}',

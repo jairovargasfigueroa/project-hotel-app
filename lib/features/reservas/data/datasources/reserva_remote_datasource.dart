@@ -66,7 +66,7 @@ class ReservaRemoteDatasource {
       );
 
       final response = await _apiService.dio.post(
-        '/reservas/',
+        'api/reservas/',
         data: reserva.toJson(),
       );
 
@@ -104,7 +104,7 @@ class ReservaRemoteDatasource {
       );
 
       final response = await _apiService.dio.get(
-        '/reservas/',
+        'api/reservas/',
         queryParameters: {'huesped': huespedId},
       );
 
