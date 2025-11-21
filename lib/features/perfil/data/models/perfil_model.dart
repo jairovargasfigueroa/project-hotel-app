@@ -8,7 +8,7 @@ class PerfilModel {
   final String last_name;
   final String? photo;
   final String? photo_url;
-  final String last_login;
+  final String? last_login;
   final bool is_admin;
   final List<dynamic> roles;
   final List<dynamic> permissions;
@@ -21,7 +21,7 @@ class PerfilModel {
     required this.last_name,
     this.photo,
     this.photo_url,
-    required this.last_login,
+    this.last_login,
     required this.is_admin,
     required this.roles,
     required this.permissions,
@@ -35,14 +35,14 @@ class PerfilModel {
       id: user['id'] as int,
       username: user['username'] as String,
       email: user['email'] as String,
-      first_name: user['first_name'] as String,
-      last_name: user['last_name'] as String,
+      first_name: (user['first_name'] as String?) ?? '',
+      last_name: (user['last_name'] as String?) ?? '',
       photo: user['photo'] as String?,
       photo_url: json['photo_url'] as String?, // Este viene en el nivel superior
-      last_login: json['last_login'] as String,
-      is_admin: json['is_admin'] as bool,
-      roles: json['roles'] as List<dynamic>,
-      permissions: json['permissions'] as List<dynamic>,
+      last_login: json['last_login'] as String?,
+      is_admin: (json['is_admin'] as bool?) ?? false,
+      roles: (json['roles'] as List<dynamic>?) ?? [],
+      permissions: (json['permissions'] as List<dynamic>?) ?? [],
     );
   }
 

@@ -1,6 +1,7 @@
 // lib/features/auth/data/datasources/auth_remote_datasource.dart
 
 import 'dart:developer' as developer;
+import 'package:dio/dio.dart';
 import '../../../../core/services/api_service.dart';
 import '../models/auth_models.dart';
 import '../models/register_models.dart';
@@ -86,7 +87,33 @@ class AuthRemoteDatasource {
         name: 'AuthDatasource',
       );
 
-      final response = await _apiService.post('/usuarios/register/', request.toJson());
+      // Si hay foto, enviar como FormData
+      dynamic requestData;
+      if (request.photoFile != null) {
+        final formData = FormData.fromMap({
+          'username': request.username,
+          'password': request.password,
+          'email': request.email,
+          if (request.firstName != null && request.firstName!.isNotEmpty)
+            'first_name': request.firstName,
+          if (request.lastName != null && request.lastName!.isNotEmpty)
+            'last_name': request.lastName,
+          'photo': await MultipartFile.fromFile(
+            request.photoFile!.path,
+            filename: 'profile_photo.jpg',
+          ),
+        });
+        requestData = formData;
+        
+        developer.log(
+          '📸 Enviando registro con foto de perfil',
+          name: 'AuthDatasource',
+        );
+      } else {
+        requestData = request.toJson();
+      }
+
+      final response = await _apiService.post('/usuarios/register/', requestData);
 
       developer.log(
         '📥 Respuesta recibida - Status: ${response.statusCode}',

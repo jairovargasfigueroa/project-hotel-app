@@ -5,6 +5,7 @@ import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
 import '../../features/habitaciones/presentation/screens/habitaciones_screen.dart';
 import '../../features/perfil/presentation/screens/perfil_screen.dart';
+import '../../features/perfil/presentation/screens/edit_perfil_screen.dart';
 import '../../features/reservas/presentation/screens/mis_reservas_screen.dart';
 import '../services/storage_service.dart';
 import 'scaffold_with_nav.dart';
@@ -70,5 +71,8 @@ final GoRouter appRouter = GoRouter(
 
     // Ruta Register (fuera del shell de tabs)
     GoRoute(path: '/register', builder: (context, state) => const RegisterScreen()),
+
+    // Ruta Editar Perfil (fuera del shell de tabs)
+    GoRoute(path: '/edit-perfil', builder: (context, state) => const EditPerfilScreen()),
   ],
 );
