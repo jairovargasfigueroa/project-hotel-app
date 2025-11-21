@@ -68,7 +68,7 @@ class HotelRemoteDatasource {
         name: 'HotelDatasource',
       );
 
-      final response = await _apiService.get('/hoteles/$id');
+      final response = await _apiService.get('api/hoteles/$id');
 
       developer.log(
         '📥 Respuesta recibida - Status: ${response.statusCode}',
