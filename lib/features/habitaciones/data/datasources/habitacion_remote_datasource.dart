@@ -18,7 +18,7 @@ class HabitacionRemoteDatasource {
       );
 
       final response = await _apiService.dio.get(
-        '/habitaciones/por-hotel/',
+        'api/habitaciones/por-hotel/',
         queryParameters: {'hotel_id': hotelId},
       );
 

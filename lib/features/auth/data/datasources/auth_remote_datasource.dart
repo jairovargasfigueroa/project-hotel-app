@@ -20,7 +20,7 @@ class AuthRemoteDatasource {
         name: 'AuthDatasource',
       );
 
-      final response = await _apiService.post('/usuarios/login/', request.toJson());
+      final response = await _apiService.post('api/usuarios/login/', request.toJson());
 
       developer.log(
         '📥 Respuesta recibida - Status: ${response.statusCode}',
@@ -66,7 +66,7 @@ class AuthRemoteDatasource {
     try {
       developer.log('🔵 Iniciando logout', name: 'AuthDatasource');
 
-      final response = await _apiService.post('/usuarios/logout/', {});
+      final response = await _apiService.post('api/usuarios/logout/', {});
 
       developer.log(
         '✅ Logout exitoso - Status: ${response.statusCode}',
@@ -113,7 +113,7 @@ class AuthRemoteDatasource {
         requestData = request.toJson();
       }
 
-      final response = await _apiService.post('/usuarios/register/', requestData);
+      final response = await _apiService.post('api/usuarios/register/', requestData);
 
       developer.log(
         '📥 Respuesta recibida - Status: ${response.statusCode}',
@@ -159,7 +159,7 @@ class AuthRemoteDatasource {
     try {
       developer.log('🔵 Verificando token', name: 'AuthDatasource');
 
-      final response = await _apiService.post('/usuarios/verify-token/', {
+      final response = await _apiService.post('api/usuarios/verify-token/', {
         'token': token,
       });
 
@@ -187,7 +187,7 @@ class AuthRemoteDatasource {
     try {
       developer.log('🔵 Refrescando token', name: 'AuthDatasource');
 
-      final response = await _apiService.post('/usuarios/refresh_token/', {
+      final response = await _apiService.post('api/usuarios/refresh_token/', {
         'refresh': refreshToken,
       });
 
